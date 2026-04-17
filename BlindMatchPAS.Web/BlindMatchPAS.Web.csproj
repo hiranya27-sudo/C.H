@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<UseAppHost>false</UseAppHost>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +15,6 @@
   <ItemGroup>
     <Folder Include="Views\ModuleLeader\" />
     <Folder Include="Views\Supervisor\" />
-    <Folder Include="Views\Student\" />
   </ItemGroup>
 
   <ItemGroup>

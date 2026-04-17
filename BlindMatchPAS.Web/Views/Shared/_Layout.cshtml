@@ -22,6 +22,10 @@
             <a asp-controller="Account" asp-action="Login">Login</a>
             <a asp-controller="Account" asp-action="Register">Register</a>
         }
+        @if (User.IsInRole("Student"))
+        {
+            <a asp-controller="Student" asp-action="Dashboard">Student Dashboard</a>
+        }
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BlindMatchPAS.Web</a>
