@@ -26,6 +26,14 @@
         {
             <a asp-controller="Student" asp-action="Dashboard">Student Dashboard</a>
         }
+
+        @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Supervisor"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Supervisor" asp-action="Dashboard">Supervisor Dashboard</a>
+            </li>
+        }
+
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BlindMatchPAS.Web</a>

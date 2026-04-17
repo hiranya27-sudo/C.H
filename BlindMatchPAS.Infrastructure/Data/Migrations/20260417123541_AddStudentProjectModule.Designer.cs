@@ -4,6 +4,7 @@ using BlindMatchPAS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlindMatchPAS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260417123541_AddStudentProjectModule")]
+    partial class AddStudentProjectModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,39 +94,6 @@ namespace BlindMatchPAS.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("BlindMatchPAS.Core.Entities.Match", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IdentityRevealed")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SupervisorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("Matches");
-                });
-
             modelBuilder.Entity("BlindMatchPAS.Core.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -180,30 +150,6 @@ namespace BlindMatchPAS.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ResearchAreas");
-                });
-
-            modelBuilder.Entity("BlindMatchPAS.Core.Entities.SupervisorExpertise", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ResearchAreaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SupervisorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResearchAreaId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("SupervisorExpertises");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -339,61 +285,23 @@ namespace BlindMatchPAS.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BlindMatchPAS.Core.Entities.Match", b =>
-                {
-                    b.HasOne("BlindMatchPAS.Core.Entities.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BlindMatchPAS.Core.Entities.ApplicationUser", "Supervisor")
-                        .WithMany()
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("Supervisor");
-                });
-
             modelBuilder.Entity("BlindMatchPAS.Core.Entities.Project", b =>
                 {
                     b.HasOne("BlindMatchPAS.Core.Entities.ResearchArea", "ResearchArea")
                         .WithMany()
                         .HasForeignKey("ResearchAreaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BlindMatchPAS.Core.Entities.ApplicationUser", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ResearchArea");
 
                     b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("BlindMatchPAS.Core.Entities.SupervisorExpertise", b =>
-                {
-                    b.HasOne("BlindMatchPAS.Core.Entities.ResearchArea", "ResearchArea")
-                        .WithMany()
-                        .HasForeignKey("ResearchAreaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BlindMatchPAS.Core.Entities.ApplicationUser", "Supervisor")
-                        .WithMany()
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ResearchArea");
-
-                    b.Navigation("Supervisor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
