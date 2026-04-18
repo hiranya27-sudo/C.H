@@ -1,32 +1,44 @@
-﻿@{
+@{
     ViewData["Title"] = "Reassign Match";
     var match = ViewBag.Match as BlindMatchPAS.Core.Entities.Match;
     var supervisors = ViewBag.Supervisors as IEnumerable<BlindMatchPAS.Core.Entities.ApplicationUser>;
 }
 
-<h2>Reassign Match</h2>
+<div class="pas-page-header">
+    <h2>Reassign Match</h2>
+    <p>Select a new supervisor for this project</p>
+</div>
 
 @if (match != null)
 {
-    <p><strong>Project:</strong> @match.Project?.Title</p>
-    <p><strong>Research Area:</strong> @match.Project?.ResearchArea?.Name</p>
+    <div class="alert-pas-info mb-4" style="max-width:540px;">
+        <div style="display:flex;flex-direction:column;gap:0.3rem;">
+            <div><span style="font-weight:600;color:var(--pas-blue);">Project:</span> @match.Project?.Title</div>
+            <div><span style="font-weight:600;color:var(--pas-blue);">Research Area:</span> @match.Project?.ResearchArea?.Name</div>
+        </div>
+    </div>
 }
 
-<form asp-action="Reassign" method="post">
-    <input type="hidden" name="matchId" value="@match?.Id" />
+<div class="pas-card" style="max-width:520px;">
+    <form asp-action="Reassign" method="post">
+        <input type="hidden" name="matchId" value="@match?.Id" />
 
-    <div class="mb-3">
-        <label>Select New Supervisor</label>
-        <select name="newSupervisorId" class="form-control">
-            @if (supervisors != null)
-            {
-                foreach (var supervisor in supervisors)
+        <div class="mb-4">
+            <label class="form-label">Select New Supervisor</label>
+            <select name="newSupervisorId" class="form-control form-select">
+                @if (supervisors != null)
                 {
-                    <option value="@supervisor.Id">@supervisor.FullName</option>
+                    foreach (var supervisor in supervisors)
+                    {
+                        <option value="@supervisor.Id">@supervisor.FullName</option>
+                    }
                 }
-            }
-        </select>
-    </div>
+            </select>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Reassign</button>
-</form>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn-pas-orange">Confirm Reassignment</button>
+            <a asp-action="Dashboard" class="btn-pas-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
