@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="Views\ModuleLeader\" />
-    <Folder Include="Views\Supervisor\" />
   </ItemGroup>
 
   <ItemGroup>
