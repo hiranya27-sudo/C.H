@@ -34,6 +34,14 @@
             </li>
         }
 
+        @if (User.Identity != null && User.Identity.IsAuthenticated &&
+                (User.IsInRole("ModuleLeader") || User.IsInRole("Admin")))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="ModuleLeader" asp-action="Dashboard">Module Leader Dashboard</a>
+            </li>
+        }
+
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BlindMatchPAS.Web</a>
